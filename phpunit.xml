@@ -1,0 +1,7 @@
+<phpunit
+	backupGlobals="false"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	>
+</phpunit>

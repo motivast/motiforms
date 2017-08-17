@@ -1,0 +1,73 @@
+{
+    "name": "motivast/motiforms",
+    "description": "Motiforms is a plugin provided for creating forms programmatically.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Motivast",
+            "email": "support@motivast.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "wordpress/wordpress-dev",
+                "version": "4.8",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/WordPress/wordpress-develop/archive/4.8.0.zip"
+                }
+            }
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0",
+        "symfony/form": "3.3.*",
+        "symfony/validator": "3.3.*",
+        "symfony/config": "3.3.*",
+        "symfony/translation": "3.3.*",
+        "symfony/templating": "3.3.*",
+        "symfony/framework-bundle": "3.3.*"
+    },
+    "require-dev": {
+        "php": ">=5.6.0",
+        "phing/phing": "2.16.0",
+        "wp-cli/wp-cli": "1.2.1",
+
+        "phpunit/phpunit": "5.7.21",
+
+        "squizlabs/php_codesniffer": "2.8.1",
+        "wp-coding-standards/wpcs": "0.11.0",
+        "sebastian/phpcpd": "3.0.0",
+        "pdepend/pdepend": "2.2.4",
+        "phploc/phploc": "4.0.0",
+        "phpmd/phpmd": "2.4.2",
+        "friendsofphp/php-cs-fixer": "1.11.4",
+
+        "composer/installers": "1.2.0",
+        "johnpbloch/wordpress": "~4",
+        "wordpress/wordpress-dev": "4.8",
+
+        "symfony/form": "3.3.*",
+        "symfony/validator": "3.3.*",
+        "symfony/config": "3.3.*",
+        "symfony/translation": "3.3.*",
+        "symfony/templating": "3.3.*",
+        "symfony/framework-bundle": "3.3.*"
+    },
+    "extra": {
+        "installer-paths": {
+            "wordpress/wp-content/plugins/{$name}/": ["type:wordpress-plugin"]
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "./vendor/bin/phing setup"
+        ],
+        "post-update-cmd": [
+            "./vendor/bin/phing setup"
+        ]
+    }
+}
