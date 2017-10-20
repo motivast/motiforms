@@ -3,7 +3,12 @@
  * Automatically locates and loads files based on their namespaces and their
  * file names whenever they are instantiated.
  *
- * @package TODO
+ * @link       http://motivast.com
+ * @since      1.0.0
+ *
+ * @package    Motiforms
+ * @subpackage Motiforms/inc
+ * @author     Motivast <support@motivast.com>
  */
 
 spl_autoload_register(function( $filename ) {

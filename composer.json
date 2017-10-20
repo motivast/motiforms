@@ -55,7 +55,9 @@
         "symfony/config": "3.3.*",
         "symfony/translation": "3.3.*",
         "symfony/templating": "3.3.*",
-        "symfony/framework-bundle": "3.3.*"
+        "symfony/framework-bundle": "3.3.*",
+        "symfony/dom-crawler": "3.3.*",
+        "symfony/css-selector": "3.3.*"
     },
     "extra": {
         "installer-paths": {

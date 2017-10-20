@@ -138,6 +138,7 @@ class Init extends Container {
 	 */
 	private function load_dependencies() {
 
+		$this['setup'] = new Setup( $this );
 	}
 
 	/**

@@ -32,7 +32,9 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Load autoloader to not bother to requiring classes.
  */
+require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 require_once plugin_dir_path( __FILE__ ) . 'inc/autoloader.php';
+require_once plugin_dir_path( __FILE__ ) . 'functions.php';
 
 /**
  * Begins execution of the plugin.
