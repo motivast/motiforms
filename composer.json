@@ -37,7 +37,6 @@
         "wp-cli/wp-cli": "1.2.1",
 
         "phpunit/phpunit": "5.7.21",
-        "phpunit/php-token-stream": "<2",
 
         "squizlabs/php_codesniffer": "2.8.1",
         "wp-coding-standards/wpcs": "0.11.0",
