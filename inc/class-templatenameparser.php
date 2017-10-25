@@ -26,22 +26,6 @@ use Symfony\Component\Templating\TemplateReference;
 class TemplateNameParser implements TemplateNameParserInterface {
 
 	/**
-	 * Root path
-	 *
-	 * @var string
-	 */
-	private $root;
-
-	/**
-	 * Template name parser constructor.
-	 *
-	 * @param string $root Root path.
-	 */
-	public function __construct( $root ) {
-		$this->root = $root;
-	}
-
-	/**
 	 * Convert a template name to a TemplateReferenceInterface instance.
 	 *
 	 * @param string|TemplateReferenceInterface $name A template name or a TemplateReferenceInterface instance.
@@ -51,16 +35,14 @@ class TemplateNameParser implements TemplateNameParserInterface {
 	public function parse( $name ) {
 
 		if ( false !== strpos( $name, ':' ) ) {
-			$path = str_replace( ':', '/', $name );
-		} else {
-			$path = $this->root . '/' . $name;
+			$name = str_replace( ':', '/', $name );
 		}
 
-		$filename = basename( $path );
+		$filename = basename( $name );
 		$filename_converted = str_replace( '_', '-', $filename );
 
-		$path = str_replace( $filename, $filename_converted, $path );
+		$name = str_replace( $filename, $filename_converted, $name );
 
-		return new TemplateReference( $path, 'php' );
+		return new TemplateReference( $name, 'php' );
 	}
 }

@@ -215,7 +215,10 @@ class Setup {
 	 */
 	private function setup_engine() {
 
-		$this->engine = new PhpEngine( new TemplateNameParser( plugin_dir_path( dirname( __FILE__ ) ) ), new FilesystemLoader( array( plugin_dir_path( dirname( __FILE__ ) ) . '/%name%' ) ) );
+		$this->engine = new PhpEngine( new TemplateNameParser(), new FilesystemLoader( array(
+			get_template_directory() . '/%name%',
+			plugin_dir_path( dirname( __FILE__ ) ) . '/%name%',
+		) ) );
 		$this->engine->addHelpers( array( new TranslatorHelper( $this->translator ) ) );
 	}
 
