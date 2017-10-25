@@ -54,6 +54,7 @@ function motiforms() {
 	}
 
 	$plugin = new \Motiforms\Init();
+	$plugin->run();
 
 }
 
