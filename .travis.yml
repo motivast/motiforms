@@ -1,17 +1,23 @@
 language: php
 
-cache:
-  directories:
-    - $HOME/.composer/cache
-
 php:
   - "7.0"
   - "7.1"
   - "7.2"
 
-install: composer install
+services:
+  - mysql
 
-script: echo "test"
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+install:
+    - ./bin/env.sh
+    - composer install
+    - ./vendor/bin/phing tests:db:create tests:config
+
+script: ./vendor/bin/phing tests
 
 jobs:
   include:
