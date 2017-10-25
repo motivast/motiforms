@@ -1,18 +1,24 @@
 language: php
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 php:
   - "7.0"
   - "7.1"
   - "7.2"
 
-before_install:
-  - phpenv config-add travis/php.ini
-  - composer self-update
-
 install: composer install
 
-script: ./vendor/bin/phing inspect
+script: echo "test"
 
-branches:
-  only:
-    - master
+jobs:
+  include:
+    - stage: inspect
+      script: ./vendor/bin/phing inspect
+      php: 7.0
+
+stages:
+  - inspect
+  - test
