@@ -295,4 +295,27 @@ class Text_Test extends WP_UnitTestCase {
 		$this->assertEquals( 'password', $password->attr( 'type' ) );
 
 	}
+
+	/**
+	 * Test rendering percent type input element
+	 */
+	function test_rendering_percent_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'percent', PercentType::class );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$percent = $crawler->filter( 'form > #form > .field > .field__label + .field__input > input#form_percent' );
+
+		$this->assertEquals( 'input', $percent->nodeName() );
+		$this->assertEquals( 'text', $percent->attr( 'type' ) );
+
+	}
 }
