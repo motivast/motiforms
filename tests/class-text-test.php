@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
 use Symfony\Component\Templating\PhpEngine;
 
@@ -340,6 +341,29 @@ class Text_Test extends WP_UnitTestCase {
 
 		$this->assertEquals( 'input', $search->nodeName() );
 		$this->assertEquals( 'search', $search->attr( 'type' ) );
+
+	}
+
+	/**
+	 * Test rendering url type input element
+	 */
+	function test_rendering_url_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'url', UrlType::class );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$url = $crawler->filter( 'form > #form > .field > .field__label + .field__input > input#form_url' );
+
+		$this->assertEquals( 'input', $url->nodeName() );
+		$this->assertEquals( 'url', $url->attr( 'type' ) );
 
 	}
 }
