@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 
 use Symfony\Component\Templating\PhpEngine;
 
@@ -220,6 +221,29 @@ class Text_Test extends WP_UnitTestCase {
 
 		$this->assertEquals( 'input', $integer->nodeName() );
 		$this->assertEquals( 'number', $integer->attr( 'type' ) );
+
+	}
+
+	/**
+	 * Test rendering money type input element
+	 */
+	function test_rendering_money_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'money', MoneyType::class );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$money = $crawler->filter( 'form > #form > .field > .field__label + .field__input > input#form_money' );
+
+		$this->assertEquals( 'input', $money->nodeName() );
+		$this->assertEquals( 'text', $integer->attr( 'type' ) );
 
 	}
 }
