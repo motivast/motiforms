@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 use Symfony\Component\Templating\PhpEngine;
 
@@ -196,6 +197,29 @@ class Text_Test extends WP_UnitTestCase {
 
 		$this->assertEquals( 'input', $email->nodeName() );
 		$this->assertEquals( 'email', $email->attr( 'type' ) );
+
+	}
+
+	/**
+	 * Test rendering integer type input element
+	 */
+	function test_rendering_integer_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'integer', IntegerType::class );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$integer = $crawler->filter( 'form > #form > .field > .field__label + .field__input > input#form_integer' );
+
+		$this->assertEquals( 'input', $integer->nodeName() );
+		$this->assertEquals( 'number', $integer->attr( 'type' ) );
 
 	}
 }
