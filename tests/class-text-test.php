@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
 
 use Symfony\Component\Templating\PhpEngine;
 
@@ -268,6 +270,29 @@ class Text_Test extends WP_UnitTestCase {
 
 		$this->assertEquals( 'input', $number->nodeName() );
 		$this->assertEquals( 'text', $number->attr( 'type' ) );
+
+	}
+
+	/**
+	 * Test rendering password type input element
+	 */
+	function test_rendering_password_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'password', PasswordType::class );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$password = $crawler->filter( 'form > #form > .field > .field__label + .field__input > input#form_password' );
+
+		$this->assertEquals( 'input', $password->nodeName() );
+		$this->assertEquals( 'password', $password->attr( 'type' ) );
 
 	}
 }
