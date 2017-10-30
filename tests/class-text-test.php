@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 use Symfony\Component\Templating\PhpEngine;
 
@@ -243,7 +244,30 @@ class Text_Test extends WP_UnitTestCase {
 		$money = $crawler->filter( 'form > #form > .field > .field__label + .field__input > input#form_money' );
 
 		$this->assertEquals( 'input', $money->nodeName() );
-		$this->assertEquals( 'text', $integer->attr( 'type' ) );
+		$this->assertEquals( 'text', $money->attr( 'type' ) );
+
+	}
+
+	/**
+	 * Test rendering number type input element
+	 */
+	function test_rendering_number_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'number', NumberType::class );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$number = $crawler->filter( 'form > #form > .field > .field__label + .field__input > input#form_number' );
+
+		$this->assertEquals( 'input', $number->nodeName() );
+		$this->assertEquals( 'text', $number->attr( 'type' ) );
 
 	}
 }
