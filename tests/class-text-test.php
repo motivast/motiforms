@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 
 use Symfony\Component\Templating\PhpEngine;
 
@@ -316,6 +317,29 @@ class Text_Test extends WP_UnitTestCase {
 
 		$this->assertEquals( 'input', $percent->nodeName() );
 		$this->assertEquals( 'text', $percent->attr( 'type' ) );
+
+	}
+
+	/**
+	 * Test rendering search type input element
+	 */
+	function test_rendering_search_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'search', SearchType::class );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$search = $crawler->filter( 'form > #form > .field > .field__label + .field__input > input#form_search' );
+
+		$this->assertEquals( 'input', $search->nodeName() );
+		$this->assertEquals( 'search', $search->attr( 'type' ) );
 
 	}
 }
