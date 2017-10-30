@@ -6,16 +6,19 @@
  */
 
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Templating\PhpEngine;
-
 use Symfony\Component\Form\FormInterface;
 
+use Symfony\Component\Templating\PhpEngine;
+
+use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\DomCrawler\Crawler;
+
 
 /**
  * Sample test case.
  */
-class Test extends WP_UnitTestCase {
+class Text_Test extends WP_UnitTestCase {
 
 	/**
 	 * Test if get factory fucntion return proper class instance
@@ -126,6 +129,48 @@ class Test extends WP_UnitTestCase {
 		$this->assertEquals( 'simple_message', $message->attr( 'id' ) );
 		$this->assertEquals( 'Message', $message->attr( 'placeholder' ) );
 		$this->assertEquals( 'Hello world!', $message->html() );
+
+	}
+
+	/**
+	 * Test rendering filled simple with errors
+	 */
+	function test_rendering_simple_form_with_errors() {
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'tests/form/class-simple.php';
+
+		$factory = mf_get_factory();
+		$form = $factory->create( Motiforms\Tests\Form\Simple::class );
+
+		$_POST = array(
+			'simple' => array(
+				'first_name' => '',
+				'last_name' => '',
+				'message' => '',
+			),
+		);
+
+		$request = Request::createFromGlobals();
+		$request->setMethod( Request::METHOD_POST );
+
+		$form->handleRequest( $request );
+
+		// Validate form to force errors.
+		$valid = $form->isValid();
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$first_name_errors = $crawler->filter( 'form > #simple > .field--errors:nth-child(1) > .field--errors__label + .field--errors__input + .field--text__errors > ul > li' );
+		$last_name_errors = $crawler->filter( 'form > #simple > .field--errors:nth-child(2) > .field--errors__label + .field--errors__input + .field--text__errors > ul > li' );
+		$message_errors = $crawler->filter( 'form > #simple > .field--errors:nth-child(3) > .field--errors__label + .field--errors__input + .field--textarea__errors > ul > li' );
+
+		$this->assertEquals( 'This value should not be blank.', $first_name_errors->text() );
+		$this->assertEquals( 'This value should not be blank.', $last_name_errors->text() );
+		$this->assertEquals( 'This value should not be blank.', $message_errors->text() );
 
 	}
 }

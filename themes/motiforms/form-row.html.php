@@ -16,16 +16,20 @@
 	$field_description_classes = array( 'field__description' );
 	$field_errors_classes      = array( 'field__errors' );
 
-if ( isset( $form->vars ) && isset( $form->vars['block_prefixes'] ) && isset( $form->vars['block_prefixes'][1] ) ) {
+if ( isset( $form->vars ) && isset( $form->vars['block_prefixes'] ) ) {
 
-	$type = $form->vars['block_prefixes'][1];
+	$type_index = count( $form->vars['block_prefixes'] ) - 2;
 
-	$field_classes[] 		  	 = 'field--' . $type;
-	$field_label_classes[]  	 = 'field--' . $type . '__label';
-	$field_input_classes[]  	 = 'field--' . $type . '__input';
-	$field_description_classes[] = 'field--' . $type . '__description';
-	$field_errors_classes[]      = 'field--' . $type . '__errors';
+	if ( isset( $form->vars['block_prefixes'][ $type_index ] ) ) {
 
+		$type = $form->vars['block_prefixes'][ $type_index ];
+
+		$field_classes[] 		  	 = 'field--' . $type;
+		$field_label_classes[]  	 = 'field--' . $type . '__label';
+		$field_input_classes[]  	 = 'field--' . $type . '__input';
+		$field_description_classes[] = 'field--' . $type . '__description';
+		$field_errors_classes[]      = 'field--' . $type . '__errors';
+	}
 }
 
 if ( isset( $errors ) && count( $errors ) > 0 ) {
