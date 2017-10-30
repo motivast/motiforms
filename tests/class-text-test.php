@@ -8,6 +8,8 @@
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+
 use Symfony\Component\Templating\PhpEngine;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -171,6 +173,29 @@ class Text_Test extends WP_UnitTestCase {
 		$this->assertEquals( 'This value should not be blank.', $first_name_errors->text() );
 		$this->assertEquals( 'This value should not be blank.', $last_name_errors->text() );
 		$this->assertEquals( 'This value should not be blank.', $message_errors->text() );
+
+	}
+
+	/**
+	 * Test rendering email type input element
+	 */
+	function test_rendering_email_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'email', EmailType::class );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$email = $crawler->filter( 'form > #form > .field > .field__label + .field__input > input#form_email' );
+
+		$this->assertEquals( 'input', $email->nodeName() );
+		$this->assertEquals( 'email', $email->attr( 'type' ) );
 
 	}
 }
