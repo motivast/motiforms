@@ -60,9 +60,14 @@ class Choice_Test extends WP_UnitTestCase {
 
 		$crawler = new Crawler( $engine['form']->form( $form_view ) );
 
+		$select = $crawler->filter( 'form > #form > .field > .field__label + .field__input > select' );
+
 		$red   = $crawler->filter( 'form > #form > .field > .field__label + .field__input > select > option:nth-child(1)' );
 		$green = $crawler->filter( 'form > #form > .field > .field__label + .field__input > select > option:nth-child(2)' );
 		$blue  = $crawler->filter( 'form > #form > .field > .field__label + .field__input > select > option:nth-child(3)' );
+
+		$this->assertEquals( 'form[choice]', $select->attr( 'name' ) );
+		$this->assertEquals( 'form_choice', $select->attr( 'id' ) );
 
 		$this->assertEquals( 'option', $red->nodeName() );
 		$this->assertEquals( 'red', $red->attr( 'value' ) );

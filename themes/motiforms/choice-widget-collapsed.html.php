@@ -14,12 +14,17 @@
 <?php if ( $required && null === $placeholder && false === $placeholder_in_choices && false === $multiple && ( ! isset( $attr['size'] ) || $attr['size'] <= 1) ) :
 	$required = false;
 endif; ?>
-<?php // @codingStandardsIgnoreStart Attribute block has own escape ?>
+<?php
+	$attributes = array(
+		'name' => $full_name,
+		'id' => $id,
+		'disabled' => $disabled,
+		'required' => $required,
+		'multiple' => ($multiple) ? true : false,
+	);
+	 // @codingStandardsIgnoreStart Attribute block has own escape ?>
 <select <?php echo $view['form']->block( $form, 'attributes', array(
-		'attr' => array(
-			'required' => $required,
-			'multiple' => ($multiple) ? true : false,
-		),
+		'attr' => $attributes,
 ) ) ?>>
 <?php // @codingStandardsIgnoreEnd ?>
 	<?php if ( null !== $placeholder ) : ?>
