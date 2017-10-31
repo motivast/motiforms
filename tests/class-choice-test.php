@@ -16,6 +16,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\LocaleType;
+use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
+use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 
 use Symfony\Component\Templating\PhpEngine;
 
@@ -282,5 +284,56 @@ class Choice_Test extends WP_UnitTestCase {
 		$this->assertEquals( 564, count( $locales->children() ) );
 
 		$this->assertEquals( 'angielski (Stany Zjednoczone)', $locales->filter( 'option[value="en_US"]' )->text() );
+	}
+
+	/**
+	 * Test rendering timezone choice type field
+	 */
+	function test_creating_timezone_choice_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'timezones', TimezoneType::class );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$timezones = $crawler->filter( 'form > #form > .field > .field__label + .field__input > select' );
+
+		$this->assertEquals( 'select', $timezones->nodeName() );
+		$this->assertEquals( 11, count( $timezones->children() ) );
+
+		$this->assertEquals( 'Warsaw', $timezones->filter( 'option[value="Europe/Warsaw"]' )->text() );
+	}
+
+	/**
+	 * Test rendering currency choice type field with set locale
+	 */
+	function test_creating_currency_choice_type_field_with_set_locale() {
+
+		\Locale::setDefault( 'pl' );
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'currencies', CurrencyType::class );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler();
+		$crawler->addHtmlContent( $engine['form']->form( $form_view ) ); // Use addHtmlContent method to force proper encoding.
+
+		$currencies = $crawler->filter( 'form > #form > .field > .field__label + .field__input > select' );
+
+		$this->assertEquals( 'select', $currencies->nodeName() );
+		$this->assertEquals( 285, count( $currencies->children() ) );
+
+		$this->assertEquals( 'złoty polski', $currencies->filter( 'option[value="PLN"]' )->text() );
 	}
 }
