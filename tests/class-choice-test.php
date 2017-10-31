@@ -13,6 +13,9 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\LanguageType;
+use Symfony\Component\Form\Extension\Core\Type\LocaleType;
 
 use Symfony\Component\Templating\PhpEngine;
 
@@ -201,5 +204,83 @@ class Choice_Test extends WP_UnitTestCase {
 		$this->assertEquals( 'input', $blue->nodeName() );
 		$this->assertEquals( 'checkbox', $blue->attr( 'type' ) );
 		$this->assertEquals( 'blue', $blue->attr( 'value' ) );
+	}
+
+	/**
+	 * Test rendering country choice type field with set locale
+	 */
+	function test_creating_country_choice_type_field_with_set_locale() {
+
+		\Locale::setDefault( 'pl' );
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'countries', CountryType::class );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$countries = $crawler->filter( 'form > #form > .field > .field__label + .field__input > select' );
+
+		$this->assertEquals( 'select', $countries->nodeName() );
+		$this->assertEquals( 255, count( $countries->children() ) );
+
+		$this->assertEquals( 'Polska', $countries->filter( 'option[value="PL"]' )->text() );
+	}
+
+	/**
+	 * Test rendering language choice type field with set locale
+	 */
+	function test_creating_language_choice_type_field_with_set_locale() {
+
+		\Locale::setDefault( 'pl' );
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'languages', LanguageType::class );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$languages = $crawler->filter( 'form > #form > .field > .field__label + .field__input > select' );
+
+		$this->assertEquals( 'select', $languages->nodeName() );
+		$this->assertEquals( 616, count( $languages->children() ) );
+
+		$this->assertEquals( 'angielski', $languages->filter( 'option[value="en"]' )->text() );
+	}
+
+	/**
+	 * Test rendering locale choice type field with set locale
+	 */
+	function test_creating_locale_choice_type_field_with_set_locale() {
+
+		\Locale::setDefault( 'pl' );
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'locales', LocaleType::class );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$locales = $crawler->filter( 'form > #form > .field > .field__label + .field__input > select' );
+
+		$this->assertEquals( 'select', $locales->nodeName() );
+		$this->assertEquals( 564, count( $locales->children() ) );
+
+		$this->assertEquals( 'angielski (Stany Zjednoczone)', $locales->filter( 'option[value="en_US"]' )->text() );
 	}
 }
