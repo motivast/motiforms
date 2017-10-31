@@ -34,7 +34,7 @@ if ( false !== $label ) {
 }
 ?>
 <?php if ( false !== $label ) : ?>
-<label <?php echo $view['form']->block( $form, 'attributes', array( // @codingStandardsIgnoreLine We will escape when we will display form
+<label <?php echo $view['form']->block( $form, 'attributes', array( // @codingStandardsIgnoreLine Attribute block has own escape
 	'attr' => $label_attr,
 ) ) ?>><?php echo esc_html( $label ); ?></label>
 <?php endif ?>
