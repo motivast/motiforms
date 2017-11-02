@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 
 use Symfony\Component\Templating\PhpEngine;
@@ -306,5 +307,64 @@ class Date_Time_Test extends WP_UnitTestCase {
 		$this->assertEquals( 'input', $selects->filter( '#form_interval' )->nodeName() );
 		$this->assertEquals( 'text', $selects->filter( '#form_interval' )->attr( 'type' ) );
 		$this->assertEquals( 'form[interval]', $selects->filter( '#form_interval' )->attr( 'name' ) );
+	}
+
+	/**
+	 * Test rendering date time type field
+	 */
+	function test_rendering_date_time_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'date_time', DateTimeType::class, array(
+			'with_minutes' => true,
+			'with_seconds' => true,
+		) );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$selects_date = $crawler->filter( 'form > #form > .field > .field__label + .field__input > #form_date_time > #form_date_time_date' );
+		$selects_time = $crawler->filter( 'form > #form > .field > .field__label + .field__input > #form_date_time > #form_date_time_time' );
+
+		$this->assertEquals( 3, count( $selects_date->children() ) );
+		$this->assertEquals( 3, count( $selects_time->children() ) );
+
+		$this->assertEquals( 'form[date_time][date][day]', $selects_date->filter( '#form_date_time_date_day' )->attr( 'name' ) );
+		$this->assertEquals( 'form[date_time][date][month]', $selects_date->filter( '#form_date_time_date_month' )->attr( 'name' ) );
+		$this->assertEquals( 'form[date_time][date][year]', $selects_date->filter( '#form_date_time_date_year' )->attr( 'name' ) );
+
+		$this->assertEquals( 'form[date_time][time][hour]', $selects_time->filter( '#form_date_time_time_hour' )->attr( 'name' ) );
+		$this->assertEquals( 'form[date_time][time][minute]', $selects_time->filter( '#form_date_time_time_minute' )->attr( 'name' ) );
+		$this->assertEquals( 'form[date_time][time][second]', $selects_time->filter( '#form_date_time_time_second' )->attr( 'name' ) );
+	}
+
+	/**
+	 * Test rendering single date time type field
+	 */
+	function test_rendering_single_date_time_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'datetime', DateTimeType::class, array(
+			'widget' => 'single_text',
+			'with_minutes' => true,
+			'with_seconds' => true,
+		) );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$input = $crawler->filter( 'form > #form > .field > .field__label + .field__input > #form_datetime' );
+
+		$this->assertEquals( 'datetime', $input->attr( 'type' ) );
 	}
 }
