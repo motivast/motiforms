@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 
 use Symfony\Component\Templating\PhpEngine;
 
@@ -76,5 +77,28 @@ class Other_Test extends WP_UnitTestCase {
 		$this->assertEquals( 'input', $file->nodeName() );
 		$this->assertEquals( 'file', $file->attr( 'type' ) );
 		$this->assertEquals( 'form[file]', $file->attr( 'name' ) );
+	}
+
+	/**
+	 * Test rendering radio type field
+	 */
+	function test_rendering_radio_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'radio', RadioType::class );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$radio = $crawler->filter( 'form > #form > .field > .field__label + .field__input > #form_radio' );
+
+		$this->assertEquals( 'input', $radio->nodeName() );
+		$this->assertEquals( 'radio', $radio->attr( 'type' ) );
+		$this->assertEquals( 'form[radio]', $radio->attr( 'name' ) );
 	}
 }
