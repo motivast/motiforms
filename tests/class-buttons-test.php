@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
 
 use Symfony\Component\Templating\PhpEngine;
 
@@ -52,5 +53,28 @@ class Buttons_Test extends WP_UnitTestCase {
 		$this->assertEquals( 'button', $button->nodeName() );
 		$this->assertEquals( 'button', $button->attr( 'type' ) );
 		$this->assertEquals( 'form[button]', $button->attr( 'name' ) );
+	}
+
+	/**
+	 * Test rendering reset type field
+	 */
+	function test_rendering_reset_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'reset', ResetType::class );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$reset = $crawler->filter( 'form > #form > div > #form_reset' );
+
+		$this->assertEquals( 'button', $reset->nodeName() );
+		$this->assertEquals( 'reset', $reset->attr( 'type' ) );
+		$this->assertEquals( 'form[reset]', $reset->attr( 'name' ) );
 	}
 }
