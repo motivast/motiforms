@@ -226,7 +226,8 @@
     <!-- ============================================  -->
     <target name="tests:phpunit" depends="dotenv" description="Execute tests using phpunit">
         <echo msg="Execute tests" />
-        <phpunit bootstrap="tests/bootstrap.php" configuration="phpunit.xml" printsummary="true" haltonerror="true"  haltonfailure="true">
+        <phpunit bootstrap="tests/bootstrap.php" configuration="phpunit.xml" printsummary="true" haltonerror="true"  haltonfailure="true" usecustomerrorhandler="false">
+        	<formatter type="plain" usefile="false"/>
             <batchtest>
                 <fileset dir="./tests">
                     <include name="**/*-test.php"/>
