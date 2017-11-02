@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 
 use Symfony\Component\Templating\PhpEngine;
 
@@ -33,7 +34,7 @@ use Symfony\Component\DomCrawler\Crawler;
 class Date_Time_Test extends WP_UnitTestCase {
 
 	/**
-	 * Test rendering date time type field
+	 * Test rendering date type field
 	 */
 	function test_rendering_date_type_field() {
 
@@ -58,7 +59,7 @@ class Date_Time_Test extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test rendering single date time type field
+	 * Test rendering single date type field
 	 */
 	function test_rendering_single_date_type_field() {
 
@@ -78,6 +79,59 @@ class Date_Time_Test extends WP_UnitTestCase {
 		$input = $crawler->filter( 'form > #form > .field > .field__label + .field__input > #form_date' );
 
 		$this->assertEquals( 'date', $input->attr( 'type' ) );
+	}
+
+	/**
+	 * Test rendering time type field
+	 */
+	function test_rendering_time_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'time', TimeType::class, array(
+			'with_minutes' => true,
+			'with_seconds' => true,
+		));
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$selects = $crawler->filter( 'form > #form > .field > .field__label + .field__input > #form_time' );
+
+		$this->assertEquals( 3, count( $selects->children() ) );
+
+		$this->assertEquals( 'form[time][hour]', $selects->filter( '#form_time_hour' )->attr( 'name' ) );
+		$this->assertEquals( 'form[time][minute]', $selects->filter( '#form_time_minute' )->attr( 'name' ) );
+		$this->assertEquals( 'form[time][second]', $selects->filter( '#form_time_second' )->attr( 'name' ) );
+	}
+
+	/**
+	 * Test rendering single time type field
+	 */
+	function test_rendering_single_time_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'time', TimeType::class, array(
+			'widget' => 'single_text',
+			'with_minutes' => true,
+			'with_seconds' => true,
+		) );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$input = $crawler->filter( 'form > #form > .field > .field__label + .field__input > #form_time' );
+
+		$this->assertEquals( 'time', $input->attr( 'type' ) );
 	}
 
 	/**
