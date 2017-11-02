@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 
 use Symfony\Component\Templating\PhpEngine;
 
@@ -366,5 +367,53 @@ class Date_Time_Test extends WP_UnitTestCase {
 		$input = $crawler->filter( 'form > #form > .field > .field__label + .field__input > #form_datetime' );
 
 		$this->assertEquals( 'datetime', $input->attr( 'type' ) );
+	}
+
+	/**
+	 * Test rendering birthday type field
+	 */
+	function test_rendering_birthday_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'birthday', BirthdayType::class );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$selects = $crawler->filter( 'form > #form > .field > .field__label + .field__input > #form_birthday' );
+
+		$this->assertEquals( 3, count( $selects->children() ) );
+
+		$this->assertEquals( 'form[birthday][day]', $selects->filter( '#form_birthday_day' )->attr( 'name' ) );
+		$this->assertEquals( 'form[birthday][month]', $selects->filter( '#form_birthday_month' )->attr( 'name' ) );
+		$this->assertEquals( 'form[birthday][year]', $selects->filter( '#form_birthday_year' )->attr( 'name' ) );
+	}
+
+	/**
+	 * Test rendering single birthday type field
+	 */
+	function test_rendering_single_birthday_type_field() {
+
+		$factory = mf_get_factory();
+		$form = $factory->create();
+
+		$form->add( 'birthday', BirthdayType::class, array(
+			'widget' => 'single_text',
+		) );
+
+		$form_view = $form->createView();
+
+		$engine = mf_get_engine();
+
+		$crawler = new Crawler( $engine['form']->form( $form_view ) );
+
+		$input = $crawler->filter( 'form > #form > .field > .field__label + .field__input > #form_birthday' );
+
+		$this->assertEquals( 'date', $input->attr( 'type' ) );
 	}
 }
