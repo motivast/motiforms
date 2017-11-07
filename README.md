@@ -1,8 +1,18 @@
 # Motiforms
-Motiforms is a plugin provided for creating forms programmatically using symfony framework.
+Motiforms is a WordPress plugin provided for creating forms programmatically using Symfony framework. If you do not need form builder and want to create advanced forms check out Motiforms.
+
+Go to [get started](#user-content-get-started) section to see a simple example.
 
 ## WARNING
-If you are not developer this plugin is not for you. Motiforms do not provide any UI to creating forms.
+If you are not developer this plugin is not for you. Motiforms do not provide any WordPress admin interface to creating forms.
+
+## Features
+- Handle form logic
+- Field serialization
+- Field validation
+- Built in html rendering helpers
+- Flexibility
+- Based on advanced Symfony framework
 
 ## Installation
 1. Download plugin from wordpres.org repository or [release section](https://github.com/motivast/motiforms/releases/latest).
@@ -72,7 +82,7 @@ class ContactForm {
 			// Check if request is POST request
 			if( $request->getMethod() === Request::METHOD_POST ) {
 
-				// Hadnle request
+				// Handle request
 				$this->form->handleRequest( $request );
 
 				// Check if form is valid
@@ -122,6 +132,6 @@ class ContactForm {
 	}
 }
 
-// Initialize our contact form
+// Initialize contact form
 new ContactForm();
 ```
