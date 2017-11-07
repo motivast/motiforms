@@ -1,12 +1,11 @@
-# Motiforms
---------------
-Motiforms is a plugin provided for creating forms programmatically using symfony framework.
+# Contribution guide
+I’m really excited that you are interested in contributing to Motiforms. Before submitting your contribution though, please make sure to take a moment and read through the following guidelines.
 
-## Getting started
+## Development setup
 
 ### Clone project
 ```
-git clone git@gitlab.dev.viewone.pl:motivast/motiforms.git
+git clone git@github.com:motivast/motiforms.git
 cd motiforms
 ```
 
@@ -19,14 +18,14 @@ cp .env.example .env
 ```
 composer install
 ```
-During installation WordPress is downloaded to wordpress directory and current directory is self symlinked to wordpress/wp-content/plugins. Pointing your webserver vhost to wordpress directory give you fully working WordPress instance with motiforms plugin installed.
+During installation WordPress is downloaded to wordpress directory and current directory is self symlinked to wordpress/wp-content/plugins. Pointing your webserver vhost to wordpress directory give you fully working WordPress instance with Motiforms plugin installed.
 
 ### Setup WordPress
 ```
 ./vendor/bin/phing wp:init
 ```
 
-This command will install WordPress with configuration from .env file. After installation you should be able to see frontend theme and backend administration.
+This command will install WordPress with configuration from .env file. After installation you should have fully working WordPress instance with Motiforms plugin activated.
 
 ### Setup tests
 ```
@@ -35,20 +34,8 @@ This command will install WordPress with configuration from .env file. After ins
 
 This command will create WordPress database for tests and create config file in wordpress-dev directory.
 
-
-### Local CI builds
-Motiforms plugins use gitalb-ci as continous integration. Gitlab-ci gives possibility to run jobs localy using gitlab-runner. To run jobs localy install gitlab-runner and docker and extecute:
+### Code inspection and tests
+Be sure to execute code inspection and test before before making a pull request.
 ```
-gitlab-runner exec docker --pre-build-script "
-	export WP_PATH=xxxxxxxxx; \
-	export WP_CONFIG_DB_NAME=xxxxxxxxx; \
-	export WP_CONFIG_DB_USER=xxxxxxxxx; \
-	export WP_CONFIG_DB_PASS=xxxxxxxxx; \
-	export WP_CONFIG_DB_HOST=mysql; \
-	export WP_TESTS_LIB_PATH=xxxxxxxxx; \
-	export WP_TESTS_CONFIG_DB_NAME=xxxxxxxxx; \
-	export WP_TESTS_CONFIG_DB_USER=xxxxxxxxx; \
-	export WP_TESTS_CONFIG_DB_PASS=xxxxxxxxx; \
-	export WP_TESTS_CONFIG_DB_HOST=mysql;" \
-	build
+./vendor/bin/phing inspect tests
 ```

@@ -135,3 +135,10 @@ class ContactForm {
 // Initialize contact form
 new ContactForm();
 ```
+
+## Contribute
+Please make sure to read the [Contribution guide](https://github.com/motivast/motiforms/blob/master/CONTRIBUTING.md) before making a pull request.
+
+Thank you to all the people who already contributed to Motiforms!
+
+## License
