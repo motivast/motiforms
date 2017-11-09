@@ -3,7 +3,7 @@
  * Class provided for creating simple form for testing
  *
  * @link       http://motivast.com
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Motivast
  * @subpackage Motivast/tests/form
@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 /**
  * Class provided for submission form
  *
- * @since      1.0.0
+ * @since      0.1.0
  * @package    Motivast
  * @subpackage Motivast/inc/submission
  * @author     Motivast <support@motivast.com>

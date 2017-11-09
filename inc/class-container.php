@@ -4,7 +4,7 @@
  * place.
  *
  * @link       http://motivast.com
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Motiforms
  * @subpackage Motiforms/inc
@@ -23,7 +23,7 @@ namespace Motiforms;
  *
  * To use this class simply extend your main plugin class.
  *
- * @since      1.0.0
+ * @since      0.1.0
  * @package    Motiforms
  * @subpackage Motiforms/inc
  * @author     Motivast <support@motivast.com>

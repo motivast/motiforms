@@ -8,17 +8,17 @@
  * that starts the plugin.
  *
  * @link              http://motivast.com
- * @since             1.0.0
+ * @since             0.1.0
  * @package           Motiforms
  *
  * @wordpress-plugin
  * Plugin Name:       Motiforms
- * Plugin URI:        motiforms
+ * Plugin URI:        https://github.com/motivast/motiforms
  * Description:       Motiforms is a plugin provided for creating forms programmatically using symfony framework.
- * Version:           1.0.0
+ * Version:           0.1.0
  * Author:            Motivast
  * Author URI:        http://motivast.com
- * License:           GPL-2.0+
+ * License:           GPL-3.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       motiforms
  * Domain Path:       /languages
@@ -43,7 +43,7 @@ require_once plugin_dir_path( __FILE__ ) . 'functions.php';
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since    0.1.0
  */
 function motiforms() {
 

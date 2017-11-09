@@ -3,7 +3,7 @@
  * The file that defines date time test class
  *
  * @link       http://motivast.com
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Motiforms
  * @subpackage Motiforms/tests
@@ -28,7 +28,7 @@ use Symfony\Component\DomCrawler\Crawler;
  * The class provided for test date and time fields
  *
  * @link       http://motivast.com
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Motiforms
  * @subpackage Motiforms/tests

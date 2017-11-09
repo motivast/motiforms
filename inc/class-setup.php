@@ -3,7 +3,7 @@
  * Class provided for setup symfony forms
  *
  * @link       http://motivast.com
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Motiforms
  * @subpackage Motiforms/inc
@@ -36,7 +36,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class provided for setup symfony forms
  *
- * @since      1.0.0
+ * @since      0.1.0
  * @package    Motiforms
  * @subpackage Motiforms/inc
  * @author     Motivast <support@motivast.com>

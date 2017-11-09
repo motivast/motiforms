@@ -6,7 +6,7 @@
  * public-facing side of the site and the admin area.
  *
  * @link       http://motivast.com
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Motiforms
  * @subpackage Motiforms/inc
@@ -23,7 +23,7 @@ namespace Motiforms;
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @since      1.0.0
+ * @since      0.1.0
  * @package    Motiforms
  * @subpackage Motiforms/inc
  * @author     Motivast <support@motivast.com>

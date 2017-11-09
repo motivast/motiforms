@@ -6,7 +6,7 @@
  * so that it is ready for translation.
  *
  * @link       http://motivast.com
- * @since      1.0.0
+ * @since      0.1.0
  *
  * @package    Motiforms
  * @subpackage Motiforms/inc
@@ -21,7 +21,7 @@ namespace Motiforms;
  * Loads and defines the internationalization files for this themes
  * so that it is ready for translation.
  *
- * @since      1.0.0
+ * @since      0.1.0
  * @package    Motiforms
  * @subpackage Motiforms/inc
  * @author     Motivast <support@motivast.com>
