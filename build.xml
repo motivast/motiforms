@@ -237,8 +237,37 @@
     </target>
 
     <!-- ============================================  -->
+    <!-- Target: tests:phpunit:coverage				   -->
+    <!-- ============================================  -->
+    <target name="tests:phpunit:coverage" depends="dotenv" description="Execute tests using phpunit with code coverage">
+        <echo msg="Execute tests" />
+        <coverage-setup database="coverage.db">
+            <fileset dir="./inc">
+               <include name="**/*.php"/>
+            </fileset>
+            <fileset dir="./themes">
+               <include name="**/*.php"/>
+            </fileset>
+            <filelist dir="./" files="motiforms.php,functions.php"/>
+        </coverage-setup>
+        <phpunit bootstrap="tests/bootstrap.php" configuration="phpunit.xml" printsummary="true" haltonerror="true"  haltonfailure="true" usecustomerrorhandler="false" codecoverage="true">
+        	<formatter type="clover" usefile="true" outfile="clover.xml" />
+            <batchtest>
+                <fileset dir="./tests">
+                    <include name="**/*-test.php"/>
+                </fileset>
+            </batchtest>
+        </phpunit>
+    </target>
+
+    <!-- ============================================  -->
     <!-- Target: tests                                 -->
     <!-- ============================================  -->
     <target name="tests" depends="dotenv, tests:phpunit" description="Execute unit tests. Execute tests:config, tests:phpunit." />
+
+    <!-- ============================================  -->
+    <!-- Target: tests:coverage                           -->
+    <!-- ============================================  -->
+    <target name="tests:coverage" depends="dotenv, tests:phpunit:coverage" description="Execute unit tests. Execute tests:config, tests:phpunit:coverage." />
 
 </project>
