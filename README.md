@@ -28,8 +28,6 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-use Symfony\Component\HttpFoundation\Request;
-
 class ContactForm {
 
 	/**
@@ -76,8 +74,8 @@ class ContactForm {
 			$this->form->add( 'messsage', TextareaType::class );
 			$this->form->add( 'submit', SubmitType::class );
 
-			// Initialize request object
-			$request = Request::createFromGlobals();
+			// Get request object
+			$request = mf_get_request();
 
 			// Check if request is POST request
 			if( $request->getMethod() === Request::METHOD_POST ) {

@@ -31,6 +31,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 use Symfony\Bundle\FrameworkBundle\Templating\Helper\TranslatorHelper;
 
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Class provided for setup symfony forms
  *
@@ -70,6 +72,13 @@ class Setup {
 	private $engine;
 
 	/**
+	 * Symfony request object
+	 *
+	 * @var Request;
+	 */
+	private $request;
+
+	/**
 	 * Symfony form builder
 	 *
 	 * @var FormBuilderInterface;
@@ -101,6 +110,7 @@ class Setup {
 		$this->setup_translator();
 		$this->setup_engine();
 		$this->setup_form_factory();
+		$this->setup_request_object();
 
 		$this->is_setup = true;
 	}
@@ -141,6 +151,20 @@ class Setup {
 		}
 
 		return $this->engine;
+	}
+
+	/**
+	 * Get request object
+	 *
+	 * @return Request
+	 */
+	public function get_request() {
+
+		if ( ! $this->is_setup() ) {
+			$this->setup();
+		}
+
+		return $this->request;
 	}
 
 	/**
@@ -236,5 +260,13 @@ class Setup {
 		)));
 
 		$this->builder->addExtension( new ValidatorExtension( $this->validator ) );
+	}
+
+	/**
+	 * Setup request object
+	 */
+	private function setup_request_object() {
+
+		$this->request = Request::createFromGlobals();
 	}
 }

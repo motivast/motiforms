@@ -51,6 +51,16 @@ class Text_Test extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test if get requets function return proper class instance
+	 */
+	function test_get_request_return_proper_class() {
+
+		$request = mf_get_request();
+
+		$this->assertInstanceOf( Request::class, $request );
+	}
+
+	/**
 	 * Test rendering simple form
 	 */
 	function test_creating_simple_form() {
@@ -152,16 +162,17 @@ class Text_Test extends WP_UnitTestCase {
 		$factory = mf_get_factory();
 		$form = $factory->create( Motiforms\Tests\Form\Simple::class );
 
-		$_POST = array(
+		$request = mf_get_request();
+
+		// Simulate POST request with params.
+		$request->setMethod( Request::METHOD_POST );
+		$request->request->replace( array(
 			'simple' => array(
 				'first_name' => '',
 				'last_name' => '',
 				'message' => '',
 			),
-		);
-
-		$request = Request::createFromGlobals();
-		$request->setMethod( Request::METHOD_POST );
+		));
 
 		$form->handleRequest( $request );
 
