@@ -77,20 +77,16 @@ class ContactForm {
 			// Get request object
 			$request = mf_get_request();
 
-			// Check if request is POST request
-			if( $request->getMethod() === Request::METHOD_POST ) {
+			// Handle request
+			$this->form->handleRequest( $request );
 
-				// Handle request
-				$this->form->handleRequest( $request );
+			// Check if form is valid
+			if ( $this->form->isSubmitted() && $this->form->isValid() ) {
 
-				// Check if form is valid
-				if ( $this->form->isSubmitted() && $this->form->isValid() ) {
+				// Get data from the form
+				$data = $this->form->getData();
 
-					// Get data from the form
-					$data = $this->form->getData();
-
-					// Send email
-				}
+				// Send email
 			}
 		}
 	}
