@@ -71,7 +71,7 @@ class ContactForm {
 			// Add fields to form
 			$this->form->add( 'full_name', TextType::class );
 			$this->form->add( 'email', EmailType::class );
-			$this->form->add( 'messsage', TextareaType::class );
+			$this->form->add( 'message', TextareaType::class );
 			$this->form->add( 'submit', SubmitType::class );
 
 			// Get request object
@@ -86,7 +86,17 @@ class ContactForm {
 				// Get data from the form
 				$data = $this->form->getData();
 
-				// Send email
+				// Define filters
+				$filters = array(
+					'full_name' => FILTER_SANITIZE_STRING,
+					'email' => FILTER_SANITIZE_STRING | FILTER_SANITIZE_EMAIL,
+					'message' => FILTER_SANITIZE_STRING,
+				);
+
+				// Fields sanitization
+				$sanitized_data = filter_var_array( $data, $filters );
+
+				// Perform action with form data e.g. send an e-mail
 			}
 		}
 	}
