@@ -97,6 +97,9 @@ class ContactForm {
 				$sanitized_data = filter_var_array( $data, $filters );
 
 				// Perform action with form data e.g. send an e-mail
+
+				// Redirect user with success parameter to prevent double submitting form
+				wp_safe_redirect( sprintf('%s?success=1', get_permalink()) );
 			}
 		}
 	}
@@ -110,7 +113,9 @@ class ContactForm {
 	 */
 	public function render() {
 
-		if( $this->form->isSubmitted() && $this->form->isValid() ) {
+		$success =  filter_input( INPUT_GET, 'success', FILTER_SANITIZE_NUMBER_INT );
+
+		if( '1' === $success ) {
 			return sprintf('<h2>%s</h2>', __('Thank you for submitting the form. We will contact you shortly.') );
 		}
 
