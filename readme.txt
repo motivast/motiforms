@@ -102,7 +102,7 @@ class ContactForm {
 				// Perform action with form data e.g. send an e-mail
 
 				// Redirect user with success parameter to prevent double submitting form
-				wp_safe_redirect( sprintf('%s?success=1', get_permalink()) );
+				wp_safe_redirect( $this->get_redirect_url() );
 			}
 		}
 	}
@@ -141,6 +141,27 @@ class ContactForm {
 		add_action( 'wp', array( $this, 'controller' ) );
 
 		add_shortcode( 'contact', array( $this, 'render' ) );
+	}
+
+	/**
+	 * Build url for form redirect
+	 *
+	 * @return string
+	 */
+	private function get_redirect_url() {
+
+		$url = get_permalink();
+
+		$query = parse_url($url, PHP_URL_QUERY);
+
+		// Returns a string if the URL has parameters or NULL if not
+		if ($query) {
+			$url .= '&success=1';
+		} else {
+			$url .= '?success=1';
+		}
+
+		return $url;
 	}
 }
 
