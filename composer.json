@@ -27,7 +27,6 @@
         "symfony/form": "3.3.*",
         "symfony/validator": "3.3.*",
         "symfony/config": "3.3.*",
-        "symfony/translation": "3.3.*",
         "symfony/templating": "3.3.*",
         "symfony/framework-bundle": "3.3.*"
     },
@@ -53,7 +52,6 @@
         "symfony/form": "3.3.*",
         "symfony/validator": "3.3.*",
         "symfony/config": "3.3.*",
-        "symfony/translation": "3.3.*",
         "symfony/templating": "3.3.*",
         "symfony/framework-bundle": "3.3.*",
         "symfony/dom-crawler": "3.3.*",

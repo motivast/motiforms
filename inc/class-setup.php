@@ -23,13 +23,8 @@ use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
 use Symfony\Component\Templating\PhpEngine;
 use Symfony\Component\Templating\Loader\FilesystemLoader;
 
-use Symfony\Component\Translation\Translator;
-use Symfony\Component\Translation\TranslatorInterface;
-
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-
-use Symfony\Bundle\FrameworkBundle\Templating\Helper\TranslatorHelper;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -56,13 +51,6 @@ class Setup {
 	 * @var ValidatorInterface
 	 */
 	private $validator;
-
-	/**
-	 * Symfony translator
-	 *
-	 * @var TranslatorInterface
-	 */
-	private $translator;
 
 	/**
 	 * Symfony template engine
@@ -107,7 +95,6 @@ class Setup {
 	public function setup() {
 
 		$this->setup_validator();
-		$this->setup_translator();
 		$this->setup_engine();
 		$this->setup_form_factory();
 		$this->setup_request_object();
@@ -227,14 +214,6 @@ class Setup {
 	}
 
 	/**
-	 * Setup symfony translator
-	 */
-	private function setup_translator() {
-
-		$this->translator = new Translator( get_locale() );
-	}
-
-	/**
 	 * Setup symfony engine
 	 */
 	private function setup_engine() {
@@ -243,7 +222,6 @@ class Setup {
 			get_template_directory() . '/%name%',
 			plugin_dir_path( dirname( __FILE__ ) ) . '/%name%',
 		) ) );
-		$this->engine->addHelpers( array( new TranslatorHelper( $this->translator ) ) );
 	}
 
 	/**
