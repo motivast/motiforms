@@ -19,7 +19,7 @@ cache:
 
 install:
     - ./bin/env.sh
-    - composer install
+    - composer install --ignore-platform-reqs
     - ./vendor/bin/phing tests:db:create tests:config
 
 script: ./vendor/bin/phing tests:coverage
