@@ -234,7 +234,10 @@ class Setup {
 		$this->builder->addExtension( new HttpFoundationExtension() );
 		$this->builder->addExtension( new TemplatingExtension( $this->engine , null, array(
 			VENDOR_THEME_DIR,
-			plugin_dir_path( dirname( __FILE__ ) ) . 'themes/motiforms',
+			apply_filters(
+				'motiforms_theme_dir',
+				plugin_dir_path( dirname( __FILE__ ) ) . 'themes/motiforms'
+			),
 		)));
 
 		$this->builder->addExtension( new ValidatorExtension( $this->validator ) );
