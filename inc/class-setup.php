@@ -76,15 +76,15 @@ class Setup {
 	/**
 	 * Theme container.
 	 *
-	 * @param Motiforms\Init $plugin Motiforms plugin container.
+	 * @param Init $plugin Motiforms plugin container.
 	 */
 	public function __construct( $plugin ) {
 
 		$this->plugin = $plugin;
 
-		define( 'VENDOR_FORM_DIR', plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/symfony/form' );
-		define( 'VENDOR_VALIDATOR_DIR', plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/symfony/validator' );
-		define( 'VENDOR_THEME_DIR', plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/symfony/framework-bundle/Resources/views/Form' );
+		defined( 'VENDOR_FORM_DIR' ) || define( 'VENDOR_FORM_DIR', plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/symfony/form' );
+		defined( 'VENDOR_VALIDATOR_DIR' ) || define( 'VENDOR_VALIDATOR_DIR', plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/symfony/validator' );
+		defined( 'VENDOR_THEME_DIR' ) || define( 'VENDOR_THEME_DIR', plugin_dir_path( dirname( __FILE__ ) ) . 'vendor/symfony/framework-bundle/Resources/views/Form' );
 
 		$this->define_hooks();
 	}
@@ -232,10 +232,7 @@ class Setup {
 		$this->builder = Forms::createFormFactoryBuilder();
 
 		$this->builder->addExtension( new HttpFoundationExtension() );
-		$this->builder->addExtension( new TemplatingExtension( $this->engine , null, array(
-			VENDOR_THEME_DIR,
-			plugin_dir_path( dirname( __FILE__ ) ) . 'themes/motiforms',
-		)));
+		$this->builder->addExtension( new TemplatingExtension( $this->engine , null, $this->get_theme_directories() ) );
 
 		$this->builder->addExtension( new ValidatorExtension( $this->validator ) );
 	}
@@ -246,5 +243,18 @@ class Setup {
 	private function setup_request_object() {
 
 		$this->request = Request::createFromGlobals();
+	}
+
+	/**
+	 * Get theme directories
+	 */
+	private function get_theme_directories() {
+
+		$theme_directories = array(
+			VENDOR_THEME_DIR,
+			plugin_dir_path( dirname( __FILE__ ) ) . 'themes/motiforms',
+		);
+
+		return $this->plugin['loader']->apply_filters( 'mf_theme_directories', $theme_directories );
 	}
 }
