@@ -90,6 +90,20 @@ class Loader {
 	}
 
 	/**
+	 * Call the apply_filters function from WordPress.
+	 *
+	 * Method is useful with test when we want to mock loader class and check if apply_filters method is executed.
+	 *
+	 * @param string $tag     The name of the filter hook.
+	 * @param mixed  $value   The value on which the filters hooked to `$tag` are applied on.
+	 *
+	 * @return mixed The filtered value after all hooked functions are applied to it.
+	 */
+	public function apply_filters( $tag, $value ) {
+		return apply_filters( $tag, $value );
+	}
+
+	/**
 	 * A utility function that is used to register the actions and hooks into a single
 	 * collection.
 	 *
