@@ -2,7 +2,7 @@
     "name": "motivast/motiforms",
     "description": "Motiforms is a plugin provided for creating forms programmatically.",
     "type": "wordpress-plugin",
-    "license": "GPL-2.0+",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
             "name": "Motivast",
