@@ -175,6 +175,6 @@ Please make sure to read the [Contribution guide](https://github.com/motivast/mo
 Thank you to all the people who already contributed to Motiforms!
 
 ## License
-The project is licensed under the [GNU GPLv3](https://github.com/motivast/motiforms/blob/master/LICENSE).
+The project is licensed under the [GNU GPLv2 (or later)](https://github.com/motivast/motiforms/blob/master/LICENSE).
 
 Copyright (c) 2017-present, Motivast
