@@ -270,4 +270,13 @@
     <!-- ============================================  -->
     <target name="tests:coverage" depends="dotenv, tests:phpunit:coverage" description="Execute unit tests. Execute tests:config, tests:phpunit:coverage." />
 
+	<!-- ============================================  -->
+	<!-- Target: changelog                             -->
+	<!-- ============================================  -->
+	<target name="changelog" depends="dotenv" description="Generate changelog based on github pull request labels.">
+
+		<echo msg="Generate changelog based on github pull request labels" />
+		<exec command="github_changelog_generator --user motivast --project motiforms --header-label '# Changelog' --enhancement-label '### Added' --bugs-label '### Fixed'" passthru="true" checkreturn="true" />
+	</target>
+
 </project>
