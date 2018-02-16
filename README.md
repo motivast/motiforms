@@ -1,4 +1,4 @@
-# Motiforms [![travis](https://img.shields.io/travis/rust-lang/rust.svg)](https://travis-ci.org/motivast/motiforms/)
+# Motiforms [![Build Status](https://travis-ci.org/motivast/motiforms.svg?branch=master)](https://travis-ci.org/motivast/motiforms)
 Motiforms is a WordPress plugin provided for creating forms programmatically using Symfony framework. If you do not need form builder and want to create advanced forms check out Motiforms.
 
 Go to [get started](#user-content-get-started) section to see a simple example.
